@@ -2,6 +2,7 @@
 
 . /lib/functions.sh
 . ../zero_config.sh
+. ../ntp.sh
 . ../netifd-proto.sh
 init_proto "$@"
 
@@ -75,6 +76,7 @@ proto_dhcp_teardown() {
 	INTERFACE=$1 zero_config stop 
 	local interface="$1"
 	proto_kill_command "$interface"
+	ntp_stop
 }
 
 add_protocol dhcp

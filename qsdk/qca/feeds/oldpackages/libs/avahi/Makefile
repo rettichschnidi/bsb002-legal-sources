@@ -17,6 +17,7 @@ PKG_MD5SUM:=2f22745b8f7368ad5a0a3fddac343f2d
 PKG_MAINTAINER:=Ted Hess <thess@kitschensync.net>
 
 PKG_BUILD_DEPENDS:=libexpat libdaemon libgdbm intltool/host libpthread dbus
+PKG_BUILD_DEPENDS_NOT_LINKED:=libgdbm 
 
 PKG_FIXUP:=autoreconf
 PKG_REMOVE_FILES:=autogen.sh

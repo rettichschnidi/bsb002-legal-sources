@@ -149,6 +149,9 @@ ifndef DUMP
   $(if $(if $(PKG_HOST_ONLY),,$(STAMP_PREPARED)),,$(if $(strip $(PKG_SOURCE_URL)),$(call Download,default)))
   $(if $(DUMP),,$(call HostHost/Autoclean))
 
+  $(HOST_STAMP_PREPARED): export CONTROL=$$(Package/$(1)/CONTROL)
+  $(HOST_STAMP_PREPARED): export DESCRIPTION=$$(Package/$(1)/description)
+  $(HOST_STAMP_PREPARED): export ATTRIBUTIONS=$$(Package/$(1)/attributions)
   $(HOST_STAMP_PREPARED):
 	@-rm -rf $(HOST_BUILD_DIR)
 	@mkdir -p $(HOST_BUILD_DIR)

@@ -71,6 +71,12 @@ define Package/srp/config
 source "$(SOURCE)/Config.in"
 endef
 
+define Package/srp/attributions
+  This product includes software developed by the University of California, Berkeley and its contributors.
+  This product includes cryptographic software written by Eric Young (eay@mincom.oz.au)  
+  This product includes software written by Tim Hudson (tjh@mincom.oz.au) 
+endef
+
 # Specify SHA1 if enabled
 TARGET_CFLAGS += $(FPIC) \
 	$(if $(CONFIG_SRP_SHA1),-DSHA1)

@@ -14,6 +14,11 @@ PKG_USE_MIPS16:=0# MIPS16 prevents protobuf's usage of the 'sync' asm-opcode
 
 PKG_INSTALL:=1
 
+PKG_LICENSE_FILES:=\
+  LICENSE \
+  license-fixups/atomicops_internals_generic_gcc.h.txt \
+  license-fixups/atomicops_internals_power.h.txt
+
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/host-build.mk
 

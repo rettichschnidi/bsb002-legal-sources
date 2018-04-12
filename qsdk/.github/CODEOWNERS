@@ -1,0 +1,10 @@
+# Defines the code owners for this repository
+# Lines starting with '#' are comments.
+# Each line is a file pattern followed by one or more owners.
+# For more information about the format of this file, refer to:
+# * https://github.com/blog/2392-introducing-code-owners, or
+# * https://github.com/bkeepers/OWNERS
+
+# These owners will be the default owners for everything in the repo.
+*       @PhilipsHueDev/bridge-platform
+

@@ -6,18 +6,11 @@
 #
 
 include $(TOPDIR)/rules.mk
+include config.mk
 
-PKG_NAME:=mbedtls
-PKG_VERSION:=2.0.0
-PKG_RELEASE:=1
 PKG_USE_MIPS16:=0
-
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-gpl.tgz
-PKG_SOURCE_URL:=https://tls.mbed.org/download/
-PKG_MD5SUM:=6b8246a19a7a77737856e729cc8a0952
-
-PKG_BUILD_PARALLEL:=1
-PKG_LICENSE:=GPL-2.0+
+PKG_LICENSE:=Apache-2.0
+PKG_LICENSE_FILES:=LICENSE apache-2.0.txt
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/cmake.mk
@@ -46,13 +39,26 @@ $(call Package/mbedtls/Default/description)
 This package contains the mbedtls library.
 endef
 
+define Package/mbedtls-progs
+$(call Package/mbedtls/Default)
+  SECTION:=utils
+  CATEGORY:=Utilities
+  DEPENDS:=+libmbedtls +libpthread
+  TITLE+= (programs)
+endef
+
+define Package/mbedtls-progs/description
+$(call Package/mbedtls/Default/description)
+This package contains the mbedtls programs.
+endef
+
 PKG_INSTALL:=1
 
 CMAKE_OPTIONS += \
 	-DCMAKE_BUILD_TYPE:String="Release" \
 	-DUSE_SHARED_MBEDTLS_LIBRARY:Bool=ON \
+	-DUSE_STATIC_MBEDTLS_LIBRARY:Bool=OFF \
 	-DENABLE_TESTING:Bool=OFF \
-	-DENABLE_PROGRAMS:Bool=OFF \
 
 define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/include
@@ -61,9 +67,15 @@ define Build/InstallDev
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/lib*.so* $(1)/usr/lib/
 endef
 
+define Package/mbedtls-progs/install
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/* $(1)/usr/bin/
+endef
+
 define Package/libmbedtls/install
 	$(INSTALL_DIR) $(1)/usr/lib
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/lib*.so* $(1)/usr/lib/
 endef
 
 $(eval $(call BuildPackage,libmbedtls))
+$(eval $(call BuildPackage,mbedtls-progs))

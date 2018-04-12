@@ -1,0 +1,15 @@
+#!/bin/sh
+. /lib/ntpd/utils.sh
+
+log notice "starting ntpd-monitor: SYNC_TIMEOUT=${SYNC_TIMEOUT}"
+
+if ! is_time_synched; then
+	sync_with_tls
+fi
+
+sleep ${SYNC_TIMEOUT}
+log warning "clock is not getting synched"
+
+log notice "restarting ntpd"
+/etc/init.d/sysntpd restart
+

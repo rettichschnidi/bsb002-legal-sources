@@ -1,8 +1,19 @@
 #!/bin/sh
+. /lib/ntpd/utils.sh
 
 action=$1
 
-logger -p daemon.notice -t ntpd "${action}: stratum=${stratum} freq_drift_ppm=${freq_drift_ppm} poll_interval=${poll_interval} offset=${offset}"
+stop_ntpd_monitor_if_running() {
+	PID="`pgrep -f ntpd-monitor`"
+	if [ -n "${PID}" ]; then
+		log notice "stopping ntpd-monitor: ntpd is in sync"
+		kill ${PID}
+	fi
+}
+
+stop_ntpd_monitor_if_running
+
+notify_time_synched ntpd
 
 for script in /etc/rc.ntpd/*; do
 	[ -x ${script} ] && ${script} ${action}

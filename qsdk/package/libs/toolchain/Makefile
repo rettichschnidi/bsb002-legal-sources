@@ -12,6 +12,11 @@ PKG_RELEASE:=1
 PKG_MAINTAINER:=Felix Fietkau <nbd@openwrt.org>
 PKG_LICENSE:=GPL-3.0-with-GCC-exception
 
+PKG_SOURCE_NAME:=uClibc-ng
+PKG_VERSION:=$(call qstrip,$(CONFIG_UCLIBC_VERSION))
+PKG_SOURCE_URL = http://downloads.uclibc-ng.org/releases/$(PKG_VERSION)/
+PKG_SOURCE:=$(PKG_SOURCE_NAME)-$(PKG_VERSION).tar.xz
+
 include $(INCLUDE_DIR)/package.mk
 
 ifneq ($(DUMP),1)

@@ -87,6 +87,9 @@ define Build/InstallDev
 	$(CP) $(PKG_BUILD_DIR)/libucimap.a $(1)/usr/lib
 endef
 
+PKG_LICENSE:=GPL-2.0
 $(eval $(call BuildPackage,uci))
+PKG_LICENSE:=LGPL-2.1
 $(eval $(call BuildPackage,libuci))
+PKG_LICENSE:=GPL-2.0
 $(eval $(call BuildPackage,libuci-lua))

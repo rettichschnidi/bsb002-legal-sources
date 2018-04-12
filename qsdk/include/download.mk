@@ -188,6 +188,10 @@ define Download
   $(foreach dep,$(DOWNLOAD_RDEP),
     $(dep): $(DL_DIR)/$(FILE)
   )
+
+  PKG_DOWNLOADS += $(FILE)
+  PKG_DOWNLOAD_URLS += $(URL)
+
   download: $(DL_DIR)/$(FILE)
 
   $(DL_DIR)/$(FILE):

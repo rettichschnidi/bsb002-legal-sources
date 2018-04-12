@@ -42,7 +42,7 @@ define Package/busybox
   MAINTAINER:=Felix Fietkau <nbd@openwrt.org>
   TITLE:=Core utilities for embedded Linux
   URL:=http://busybox.net/
-  DEPENDS:=+BUSYBOX_USE_LIBRPC:librpc +BUSYBOX_CONFIG_PAM:libpam
+  DEPENDS:=+BUSYBOX_USE_LIBRPC:librpc +BUSYBOX_CONFIG_PAM:libpam +tlsdate
   MENU:=1
 endef
 
@@ -114,11 +114,14 @@ define Build/Compile
 endef
 
 define Package/busybox/install
+	$(INSTALL_DIR) $(1)/lib/ntpd/
+	$(INSTALL_BIN) ./files/utils.sh $(1)/lib/ntpd/utils.sh
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(CP) $(PKG_INSTALL_DIR)/* $(1)/
 	$(INSTALL_BIN) ./files/cron $(1)/etc/init.d/cron
 	$(INSTALL_BIN) ./files/telnet $(1)/etc/init.d/telnet
 	$(INSTALL_BIN) ./files/sysntpd $(1)/etc/init.d/sysntpd
+	$(INSTALL_BIN) ./files/ntpd-monitor $(1)/usr/sbin/ntpd-monitor
 	$(INSTALL_BIN) ./files/ntpd-hotplug $(1)/usr/sbin/ntpd-hotplug
 	$(INSTALL_DIR) $(1)/etc/ntpd
 	$(INSTALL_BIN) ./files/ntpd.script $(1)/etc/ntpd/ntpd.script

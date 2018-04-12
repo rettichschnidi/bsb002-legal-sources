@@ -47,7 +47,7 @@ PKG_SOURCE_SUBDIR:=${PKG_NAME}-${PKG_VERSION}
 PKG_SOURCE_VERSION:=28772f37a4b8a57ab9439b9e79b19f9abee686da
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_VERSION).tar.gz
 
-PKG_LICENSE:=MIT
+PKG_LICENSE:=BSD-3-Clause
 PKG_LICENSE_FILES:=LICENSE.md
 
 include $(INCLUDE_DIR)/package.mk
@@ -59,7 +59,7 @@ define Package/curve25519-donna
   SUBMENU:=Crypto
   CATEGORY:=Libraries
   TITLE:=Library implementing the Curve25519-donna function
-  URL:=https://code.google.com/p/curve25519-donna/
+  URL:=https://github.com/agl/curve25519-donna
   DEPENDS:=+libc
 endef
 

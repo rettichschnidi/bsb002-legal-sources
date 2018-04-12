@@ -155,6 +155,12 @@ ifeq ($(DUMP),)
     done; \
     [ -z "$$$$BUILD_DEPENDS" ] || echo "BuildDepends: $$$$BUILD_DEPENDS"; \
 
+    BUILD_DEPENDS_NOT_LINKED=''; \
+    for depend in $(PKG_BUILD_DEPENDS_NOT_LINKED); do \
+      BUILD_DEPENDS_NOT_LINKED=$$$${BUILD_DEPENDS_NOT_LINKED:+$$$$BUILD_DEPENDS_NOT_LINKED, }$$$${depend##+}; \
+    done; \
+    [ -z "$$$$BUILD_DEPENDS_NOT_LINKED" ] || echo "BuildDependsNotLinked: $$$$BUILD_DEPENDS_NOT_LINKED"; \
+
 
 $(_define) Package/$(1)/CONTROL
 Package: $(1)
@@ -167,6 +173,8 @@ $$(call addfield,Depends,$$(Package/$(1)/DEPENDS)
 )$$(call addfield,LocalSource,$(LOCAL_SRC)
 )$$(call addfield,PkgSource,$(if $(PKG_SOURCE),$(PKG_SOURCE),$(LINUX_SOURCE))
 )$$(call addfield,PkgSourceUrls,$(if $(PKG_SOURCE_URL),$(PKG_SOURCE_URL),$(LINUX_SITE))
+)$$(call addfield,PkgDownloads,$(if $(PKG_DOWNLOADS),$(PKG_DOWNLOADS))
+)$$(call addfield,PkgDownloadUrls,$(if $(PKG_DOWNLOAD_URLS),$(PKG_DOWNLOAD_URLS))
 )$$(call addfield,License,$(PKG_LICENSE)
 )$$(call addfield,LicenseFiles,$(PKG_LICENSE_FILES)
 )$$(call addfield,Section,$(SECTION)

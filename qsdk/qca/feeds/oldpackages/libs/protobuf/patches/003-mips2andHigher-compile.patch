@@ -3,7 +3,7 @@
 @@ -150,7 +150,7 @@
  }
  
- inline void MemoryBarrier() {
+ inline void MemoryBarrierInternal() {
 -  __asm__ __volatile__("sync" : : : "memory");
 +  __asm__ __volatile__(".set mips2; sync; .set mips0" : : : "memory");
  }

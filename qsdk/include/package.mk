@@ -220,6 +220,9 @@ define Build/DefaultTargets
 	)
 
   $(STAMP_PREPARED) : export PATH=$$(TARGET_PATH_PKG)
+  $(STAMP_PREPARED) : export CONTROL=$$(Package/$(1)/CONTROL)
+  $(STAMP_PREPARED) : export DESCRIPTION=$$(Package/$(1)/description)
+  $(STAMP_PREPARED) : export ATTRIBUTIONS=$$(Package/$(1)/attributions)
   $(STAMP_PREPARED):
 	@-rm -rf $(PKG_BUILD_DIR)
 	@mkdir -p $(PKG_BUILD_DIR)

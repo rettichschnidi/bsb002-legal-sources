@@ -3,6 +3,7 @@
 
 . /lib/functions.sh
 . /lib/netifd/zero_config.sh
+. /lib/netifd/ntp.sh
 . /lib/netifd/netifd-proto.sh
 
 set_classless_routes() {
@@ -82,46 +83,9 @@ setup_interface () {
 		ubus call network add_dynamic "$(json_dump)"
 	fi
 
-	if [ -n "$ntpsrv" ]; then
-		local currentNtpServers="`uci get -q system.ntp.server`"
-		local defaultNtpServers="`echo $currentNtpServers | cut -d" " -f 1-4`"
-		local NtpServersToBeAdded=""
-		local duplicate=0
-		for aNtpSrv in $ntpsrv; do
-			for aServer in $defaultNtpServers; do
-				if [ "$aNtpSrv" == "$aServer" ]; then
-					logger -t dhcp -p daemon.info "ntp server:\"$aNtpSrv\" is already in the server list"
-					duplicate=1
-					break
-				fi
-			done
-			if [ $duplicate -eq 1 ]; then
-				duplicate=0
-			else
-				if [ "$NtpServersToBeAdded" == "" ]; then
-					NtpServersToBeAdded="$aNtpSrv"
-				else
-					NtpServersToBeAdded="$aNtpSrv $NtpServersToBeAdded"
-				fi
-				logger -t dhcp -p daemon.info "adding dhcp learned ntp server:$aNtpSrv to ntp server list"
-			fi
-		done
-
-		local newNtpServers="$defaultNtpServers $NtpServersToBeAdded"
-		if [ "$currentNtpServers" != "$newNtpServers" ]; then
-			if uci set system.ntp.server="$newNtpServers" && uci commit system; then
-				logger -t dhcp -p daemon.notice "re-start ntpd with new server list: $newNtpServers"
-				/etc/init.d/sysntpd restart
-			else
-				logger -t dhcp -p daemon.error "unable to set ntp server list: $newNtpServers"
-			fi
-		else
-			logger -t dhcp -p daemon.notice "no change in ntp server list: $newNtpServers"
-		fi
-	fi
+	[ -n "$ntpsrv" ] && ntp_update_servers $ntpsrv
 
 	# TODO
-	# [ -n "$ntpsrv" ] && 	change_state network "$ifc" lease_ntpsrv "$ntpsrv"
 	# [ -n "$timesvr" ] && 	change_state network "$ifc" lease_timesrv "$timesvr"
 	# [ -n "$hostname" ] &&	change_state network "$ifc" lease_hostname "$hostname"
 	# [ -n "$timezone" ] && 	change_state network "$ifc" lease_timezone "$timezone"
@@ -137,15 +101,18 @@ case "$1" in
 		logger -t dhcp -p daemon.info "$1"
 		deconfig_interface		
 		zero_config start
+		ntp_stop
 		;;
 	bound)
 		logger -t dhcp -p daemon.info "$1 $ip ${subnet:-255.255.255.0} $router"
 		zero_config stop
 		setup_interface
+		ntp_restart_if_needed
 		;;
 	renew)
 		logger -t dhcp -p daemon.info "$1 $ip ${subnet:-255.255.255.0} $router"
 		setup_interface
+		ntp_restart_if_needed
 		;;
 esac
 

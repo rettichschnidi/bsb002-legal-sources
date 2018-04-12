@@ -1,4 +1,4 @@
-# CCS Release: Hue Bridge 2.0, version 1705121051
+# CCS Release: Hue Bridge 2.0, version 1801260942
 
 This package includes the Complete Corresponding Machine-readable Source Code as defined in the GPLv2 for the Hue Bridge 2.0.
 
@@ -19,20 +19,20 @@ The Hue Bridge 2.0 is cryptographically locked down. We would have loved to ship
 
 To build the CCS, you need the following:
 
-1. Linux distribution: Ubuntu 16.04.2 LTS
-2. Required executables: gcc g++ objcopy patch bzip2 flex make xgettext pkg-config unzip svn gawk ocamlyacc cmake hg ocamlfind repo openssl srec_cat curl python3 pip3 mkdir repo git grep mkenvimage
+1. Linux distribution: Ubuntu 16.04.4 LTS
+2. Required executables: gcc g++ objcopy patch bzip2 flex make xgettext pkg-config unzip svn gawk ocamlyacc cmake hg ocamlfind repo openssl firejail srec_cat curl python3 pip3 mkdir repo git grep mkenvimage
 3. Required debian packages: libunwind8-dev libssl-dev python3-lxml zlib1g-dev
 4. Required Python packages (installed with pip): yaml magic openpyxl git
 
 Notes:
 
-* The required executables is not an exaustive list. It should however cover at least the non-default packages for Ubuntu 16.04.2 LTS.
-* If you try to call any missing executables on the command-line, Ubuntu 16.04.2 LTS should suggest the missing package.
+* The required executables is not an exaustive list. It should however cover at least the non-default packages for Ubuntu 16.04.4 LTS.
+* If you try to call any missing executables on the command-line, Ubuntu 16.04.4 LTS should suggest the missing package.
 
 ### Steps
 
 1. From the directory containing this README.md file, simply run:```make```
-2. The output images (and contained executables) are copied to `release/product/factory`
+2. The output images (and contained executables) are copied to `bridge/build/bsb002/release/product/factory/bsb002`
 
 ## Installation
 
@@ -56,15 +56,15 @@ To install the images (and contained executables) to the Hue Bridge 2.0, follow 
 3. Set-up the programmer to correctly program a GigaDevice GD25Q41BTIGR 3.3V SPI NOR flash part.
 4. Install SU11 into the flash programmer.
 5. Erase address range 0x0 - 0x40000 within SU11, being careful not to erase anything else.
-6. Flash `release/product/factory/bsb002/bsb002_uboot.bin` into SU11 at offset 0x0.
+6. Flash `bridge/build/bsb002/release/product/factory/bsb002/bsb002_uboot.bin` into SU11 at offset 0x0.
 7. Remove SU11 from the programmer.
 8. Set-up the programmer to correctly program a GigaDevice GD5F1GQ4UCYIG 3.3V SPI NAND flash part:
   * Configure erase blocks marked bad to be skipped when erasing.
   * Configure erase blocks marked bad to be skipped when programming.
 9. Install SU9 into the flash programmer.
 10. Erase the entire SU9 device, but do not reset bad block markers.
-11. Flash `release/product/factory/bsb002/kernel.bin` into SU9 at both offset 0x0 and 0x2C00000
-12. Flash `release/product/factory/bsb002/root.bin` into SU9 at both offset 0x400000 and 0x3000000.
-13. Flash `release/product/factory/bsb002/overlay.bin` into SU9 at offset 0x5800000.
+11. Flash `bridge/build/bsb002/release/product/factory/bsb002/kernel.bin` into SU9 at both offset 0x0 and 0x2C00000
+12. Flash `bridge/build/bsb002/release/product/factory/bsb002/root.bin` into SU9 at both offset 0x400000 and 0x3000000.
+13. Flash `bridge/build/bsb002/release/product/factory/bsb002/overlay.bin` into SU9 at offset 0x5800000.
 14. Remove SU9 from the programmer.
 15. Re-solder parts SU9 and SU11 onto the PCB, being careful not to damage the pads on the PCB or the parts.

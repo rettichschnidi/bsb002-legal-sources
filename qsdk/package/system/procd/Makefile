@@ -57,7 +57,7 @@ endef
 define Package/procd-nand
   SECTION:=utils
   CATEGORY:=Utilities
-  DEPENDS:=@NAND_SUPPORT +ubi-utils
+  DEPENDS:=@NAND_SUPPORT:+ubi-utils
   TITLE:=OpenWrt sysupgrade nand helper
 endef
 

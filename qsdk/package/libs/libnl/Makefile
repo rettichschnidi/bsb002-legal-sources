@@ -27,7 +27,7 @@ define Package/libnl
   CATEGORY:=Libraries
   TITLE:=netlink socket library
   DEPENDS:=+libpthread
-  URL:=http://people.suug.ch/~tgr/libnl/
+  URL:=http://www.infradead.org/~tgr/libnl/
 endef
 
 define Package/libnl/description
