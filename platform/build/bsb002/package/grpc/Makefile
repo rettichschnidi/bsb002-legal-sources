@@ -48,6 +48,10 @@ CMAKE_OPTIONS += \
 TARGET_CFLAGS += \
   -D_GLIBCXX_USE_C99=1
 
+HOST_CFLAGS += \
+  -Wno-implicit-fallthrough \
+  -Wno-implicit-function-declaration
+
 PKG_INSTALL:=1
  
 define Package/grpc
@@ -90,7 +94,7 @@ define Package/grpc/install
 endef
 
 define Host/Compile
-	$(call Host/Compile/Default,$(GRPC_HOST_TARGETS) LDFLAGS="$(HOST_LDFLAGS)")
+	$(call Host/Compile/Default,$(GRPC_HOST_TARGETS) LDFLAGS="$(HOST_LDFLAGS)" CFLAGS="$(HOST_CFLAGS)")
 endef
 
 define Host/Install

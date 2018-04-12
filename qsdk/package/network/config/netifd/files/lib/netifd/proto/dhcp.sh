@@ -33,7 +33,13 @@ proto_dhcp_setup() {
 	local ipaddr hostname clientid vendorid broadcast reqopts iface6rd sendopts delegate zone6rd zone mtu6rd customroutes
 	json_get_vars ipaddr hostname clientid vendorid broadcast reqopts iface6rd sendopts delegate zone6rd zone mtu6rd customroutes
 
+	# hue: avoid requesting a specific IP address on discovery
+	unset ipaddr
+	# hue: default list of request options with 'hostname' removed
+	[ -n "$reqopts" ] || reqopts="1 3 6 15 28 42"
+
 	local opt dhcpopts
+	[ -n "$reqopts" ] && append dhcpopts "--no-default-options"
 	for opt in $reqopts; do
 		append dhcpopts "-O $opt"
 	done

@@ -1,4 +1,4 @@
-# CCS Release: Hue Bridge 2.0, version 1801260942
+# CCS Release: Hue Bridge 2.0, version 1802201122
 
 This package includes the Complete Corresponding Machine-readable Source Code as defined in the GPLv2 for the Hue Bridge 2.0.
 
@@ -20,9 +20,9 @@ The Hue Bridge 2.0 is cryptographically locked down. We would have loved to ship
 To build the CCS, you need the following:
 
 1. Linux distribution: Ubuntu 16.04.4 LTS
-2. Required executables: gcc g++ objcopy patch bzip2 flex make xgettext pkg-config unzip svn gawk ocamlyacc cmake hg ocamlfind repo openssl firejail srec_cat curl python3 pip3 mkdir repo git grep mkenvimage
-3. Required debian packages: libunwind8-dev libssl-dev python3-lxml zlib1g-dev
-4. Required Python packages (installed with pip): yaml magic openpyxl git
+2. Required executables: gcc g++ objcopy patch bzip2 flex make xgettext pkg-config unzip svn gawk ocamlyacc cmake hg ocamlfind repo ubireader_extract_images unsquashfs openssl firejail srec_cat curl python3 pip3 pip3 mkdir repo git grep mkenvimage unix2dos
+3. Required debian packages: libunwind8-dev libssl-dev python3-lxml zlib1g-dev liblzo2-dev
+4. Required Python packages (installed with pip): yaml magic openpyxl git xmlrunner lzo
 
 Notes:
 

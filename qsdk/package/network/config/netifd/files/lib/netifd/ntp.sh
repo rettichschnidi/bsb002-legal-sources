@@ -7,7 +7,7 @@ sort_and_remove_duplicates() {
 ntp_update_servers() {
 	local ntpsrv="$*"
 	local currentList="`uci get -q system.ntp.server`"
-	local defaultList="`uci -c /rom/etc/config/ get -q system.ntp.server`"
+	local defaultList="`uci get -q system.ntp_default.server`"
 
 	logger -t dhcp -p daemon.info "ntp servers: suggested: ${ntpsrv}"
 
