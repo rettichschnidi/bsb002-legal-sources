@@ -1,0 +1,9 @@
+#!/bin/sh
+
+action=$1
+
+logger -p daemon.notice -t ntpd "${action}: stratum=${stratum} freq_drift_ppm=${freq_drift_ppm} poll_interval=${poll_interval} offset=${offset}"
+
+for script in /etc/rc.ntpd/*; do
+	[ -x ${script} ] && ${script} ${action}
+done
